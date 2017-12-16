@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux-immutable';
-import {home} from './home';
+import {map} from './map';
 
 export const rootReducer = combineReducers({
-  home
+  map
 });

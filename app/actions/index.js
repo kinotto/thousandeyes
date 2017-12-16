@@ -1,2 +1,1 @@
-export * from './ideasActions';
-export * from './categoriesActions';
+export * from './mapActions';

@@ -1,0 +1,14 @@
+.map{
+    svg { 
+        width: 100%; 
+        height: auto;
+        overflow: visible;
+    }
+    
+    .vector path {
+        fill: none;
+        stroke: #35143C;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+    }
+}
