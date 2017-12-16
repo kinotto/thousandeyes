@@ -7,3 +7,5 @@ export const MAP = {
     'lng': -122.433701
   }
 };
+
+export const POLLING_TIME_NEXT_BUS = 15000;

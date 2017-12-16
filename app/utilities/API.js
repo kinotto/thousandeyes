@@ -1,6 +1,5 @@
-const basePath = 'https://ccbackendkarim.herokuapp.com/api';
+const basePath = 'http://webservices.nextbus.com/service/publicJSONFeed';
 
 export const API = {
-  'FETCH_IDEAS': `${basePath}/ideas`,
-  'FETCH_CATEGORIES': `${basePath}/categories`
+  'LOCATIONS': `${basePath}?command=vehicleLocations&a=sf-muni`
 };
