@@ -11,6 +11,20 @@ class Filter extends Component {
       'selected': []
     };
   }
+  componentWillReceiveProps(newProps) {
+    let newRouteTags = newProps.filter.get('routeTags');
+    let oldRouteTags = this.props.filter.get('routeTags');
+    let isOldRouteTagsEmpty = !this.props.filter.get('routeTags').size;
+
+    if (newRouteTags !== oldRouteTags && isOldRouteTagsEmpty) {
+      let routeTags = newProps.filter.get('routeTags').toJS();
+      // when application starts we apply all the filters
+      this.props.FilterByRouteTag(routeTags);
+      this.setState({
+        'selected': routeTags
+      });
+    }
+  }
   isSelected(routeTag) {
     return this.state.selected.find(sel => sel === routeTag);
   }

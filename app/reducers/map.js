@@ -44,12 +44,12 @@ export const getMapState = createSelector(
     let vehicles = mapState.getIn(['vehicleLocations', 'vehicle']);
     if (vehicles) {
       let filters = mapState.get('filters');
-      let locationCoordinates = List(vehicles
-        .filter(location => {
-          let flag = filters.some(filter => filter === location.routeTag);
-          return flag;
-        })
-        .map(location => [location.lon, location.lat])
+      let locationCoordinates = List(
+        vehicles
+          // apply the filters first
+          .filter(location => filters.some(filter => filter === location.routeTag))
+          // then map to a [lon,lat] format for d3
+          .map(location => [location.lon, location.lat])
       );
       mapState = mapState.set('locationCoordinates', locationCoordinates);
     }
