@@ -15,8 +15,9 @@ class Filter extends Component {
   }
   addRemove(routeTag) {
     if (this.isSelected(routeTag)) {
+      this.state.selected.splice(this.state.selected.indexOf(routeTag), 1);
       this.setState({
-        'selected': this.state.selected.splice(this.state.selected.indexOf(routeTag), 1)
+        'selected': this.state.selected
       });
     } else {
       this.setState({
@@ -24,10 +25,13 @@ class Filter extends Component {
       });
     }
   }
-
+  /* shouldComponentUpdate() {
+    return false;
+  }*/
   render() {
     return (
       <div className="filter">
+        <h2 className="filter__title">Filter by route tag</h2>
         <div className="filter__row">
           {this.props.filter.get('routeTags').map(routeTag => {
             return (

@@ -1,19 +1,27 @@
 .filter{
+    &__title{
+        display: flex;
+        justify-content: center;
+    }
     &__row{
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         justify-content: center;
         align-items: center;
         flex: 1;
     }
     &__el{
+        flex-shrink: 0;
         padding: 10px;
-        margin: 5px;
-        background: grey;
-        border: 1px solid grey;
+        background: #e4e4e4;
+        margin: 2px;
+        border-radius: 5px;
         cursor: pointer;
+        color: black;
         &--selected {
-            background: red;
+            color: white;
+            background: rgb(5, 14, 145);
         }
     }
 

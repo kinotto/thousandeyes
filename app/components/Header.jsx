@@ -5,7 +5,6 @@ export default class Header extends Component {
     return (
       <div className="header">
         <h1>San Francisco Map</h1>
-        <p> karim </p>
       </div>
     );
   }
