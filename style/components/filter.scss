@@ -1,4 +1,11 @@
 .filter{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    
     &__title{
         display: flex;
         justify-content: center;
@@ -9,7 +16,6 @@
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        flex: 1;
     }
     &__el{
         flex-shrink: 0;
@@ -19,10 +25,25 @@
         border-radius: 5px;
         cursor: pointer;
         color: black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
         &--selected {
             color: white;
-            background: rgb(5, 14, 145);
+            background: rgb(40, 47, 148);
         }
+    }
+    &__empty{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 15px;
+        color: white;
+        background: #e4e4e4;
+        margin-top: 10px;
+        background: #CC5257;
+        cursor: pointer;
     }
 
 }

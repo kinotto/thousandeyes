@@ -18,7 +18,7 @@ class Filter extends Component {
 
     if (newRouteTags !== oldRouteTags && isOldRouteTagsEmpty) {
       let routeTags = newProps.filter.get('routeTags').toJS();
-      // when application starts we apply all the filters
+      // when application starts apply all the filters
       this.props.FilterByRouteTag(routeTags);
       this.setState({
         'selected': routeTags
@@ -27,6 +27,12 @@ class Filter extends Component {
   }
   isSelected(routeTag) {
     return this.state.selected.find(sel => sel === routeTag);
+  }
+  cleanFilters() {
+    this.props.FilterByRouteTag([]);
+    this.setState({
+      'selected': []
+    });
   }
   addRemove(routeTag) {
     let updateSelected;
@@ -58,6 +64,11 @@ class Filter extends Component {
               </div>
             );
           })}
+        </div>
+        <div
+          className="filter__empty"
+          onClick={this.cleanFilters.bind(this)}>
+          Remove all filters
         </div>
       </div>
     );

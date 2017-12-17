@@ -19,12 +19,9 @@ class Map extends Component {
     this.projection = d3.geoMercator()
       .center([MAP.sf.lng, MAP.sf.lat])
       .scale(MAP.scale)
-      .translate([MAP.width / 2, MAP.height / 2]);
+      .translate([MAP.width / 2, MAP.height / 2.5]);
   }
-  componentWillMount() {
-    // subscribe only once to location updates
-    this.props.GetVehicleLocationsRequest();
-  }
+
   renderMap(projection, features) {
     let path = d3.geoPath()
       .projection(projection);
@@ -50,16 +47,6 @@ class Map extends Component {
       .selectAll('circle')
       .data(locationCoordinates)
       .enter()
-    /* .append('circle')
-      .attr('cx', function (d) {
-        // console.log(projection(d));
-        return projection(d)[0];
-      })
-      .attr('cy', function (d) {
-        return projection(d)[1];
-      })
-      .attr('r', '8px')
-      .attr('fill', 'red');*/
       .append('image')
       .attr('x', coord => {
         return projection(coord)[0];
@@ -71,6 +58,12 @@ class Map extends Component {
       .attr('height', 10)
       .attr('xlink:href', VEHICLE_ICON);
   }
+
+  componentWillMount() {
+    // subscribe only once to location updates
+    this.props.GetVehicleLocationsRequest();
+  }
+
   componentWillReceiveProps(newProps) {
     let vehicleLocationsRetrieved = !!newProps.map.getIn('vehicleLocations', 'vehicle');
     let geoJsonSize = newProps.map.get('geojson').size;
