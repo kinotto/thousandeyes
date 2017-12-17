@@ -1,0 +1,20 @@
+.filter{
+    &__row{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex: 1;
+    }
+    &__el{
+        padding: 10px;
+        margin: 5px;
+        background: grey;
+        border: 1px solid grey;
+        cursor: pointer;
+        &--selected {
+            background: red;
+        }
+    }
+
+}

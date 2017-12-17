@@ -10,7 +10,7 @@ import {
 } from '../actions';
 import * as d3 from 'd3';
 
-const handleReactiveLocation = locationJson => {
+let handleReactiveLocation = locationJson => {
   return new Observable(observer => {
     d3.json(locationJson, function (err, geojson) {
       if (err) {
@@ -21,17 +21,19 @@ const handleReactiveLocation = locationJson => {
   });
 };
 
-const vehicleAjax = () => {
+let vehicleAjax = () => {
   return ajax({'url': API.LOCATIONS, 'crossDomain': true})
     .map(({response}) => {
       return GetVehicleLocationsResponse(response);
     });
 };
-const pollingNextBus = () => {
+let pollingNextBus = () => {
   return Observable
-    .interval(POLLING_TIME_NEXT_BUS)
+    // emit locations immediatly and then every 15s
+    .timer(0, POLLING_TIME_NEXT_BUS)
     .switchMap(vehicleAjax);
 };
+
 
 const getGeoJson = action$ => {
   return action$
@@ -45,7 +47,6 @@ const getGeoJson = action$ => {
 const pollingVehicleLocations = action$ => {
   return action$
     .ofType(GET_VEHICLES_LOCATIONS_REQUEST)
-    .switchMap(vehicleAjax) // first immediate request
     .switchMap(pollingNextBus);
 };
 

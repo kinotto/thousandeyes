@@ -8,7 +8,7 @@ import {
 const initState = () => {
   return Map({
     'geojson': Map(),
-    'locations': Map(),
+    'vehicleLocations': Map(),
     'locationCoordinates': List()
   });
 };
@@ -21,7 +21,7 @@ export const map = (state = initState(), action) => {
   }
   case GET_VEHICLES_LOCATIONS_RESPONSE: {
     return state
-      .set('locations', Map(action.payload));
+      .set('vehicleLocations', Map(action.payload));
   }
   default:
     return state;
@@ -35,7 +35,7 @@ const mapSelector = state => state.get('map');
 export const getMapState = createSelector(
   [ mapSelector ],
   mapState => {
-    let vehicles = mapState.getIn(['locations', 'vehicle']);
+    let vehicles = mapState.getIn(['vehicleLocations', 'vehicle']);
     if (vehicles) {
       mapState = mapState.set('locationCoordinates',
         List(vehicles.map(location => [location.lon, location.lat]))

@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Observable} from 'rxjs';
+// import {Observable} from 'rxjs';
 import * as d3 from 'd3';
-import {MAP} from '../utilities/constants';
+import {
+  MAP,
+  VEHICLE_ICON
+} from '../utilities/constants';
 import {getMapState} from '../reducers/map';
 import {
   GetGeoJsonRequest,
@@ -15,12 +18,12 @@ class Map extends Component {
     super();
     this.projection = d3.geoMercator()
       .center([MAP.sf.lng, MAP.sf.lat])
-      .scale(200000)
+      .scale(MAP.scale)
       .translate([MAP.width / 2, MAP.height / 2]);
   }
   componentWillMount() {
-    // retrieve geojson
-    this.props.GetGeoJsonRequest(MAP.geojsonURL);
+    // subscribe only once to location updates
+    this.props.GetVehicleLocationsRequest();
   }
   renderMap(projection, features) {
     let path = d3.geoPath()
@@ -41,16 +44,13 @@ class Map extends Component {
   }
 
   updateVehicles(projection, locationCoordinates) {
-    let aa = [-122.490402, 37.786453];
-    let bb = [-122.389809, 37.72728];
-    d3.select('svg').selectAll('circle').remove();
+    d3.select('svg').selectAll('image').remove();
 
     d3.select('svg')
       .selectAll('circle')
-      // .data([aa, bb])
       .data(locationCoordinates)
       .enter()
-      .append('circle')
+    /* .append('circle')
       .attr('cx', function (d) {
         // console.log(projection(d));
         return projection(d)[0];
@@ -59,12 +59,24 @@ class Map extends Component {
         return projection(d)[1];
       })
       .attr('r', '8px')
-      .attr('fill', 'red');
+      .attr('fill', 'red');*/
+      .append('image')
+      .attr('x', coord => {
+        return projection(coord)[0];
+      })
+      .attr('y', coord => {
+        return projection(coord)[1];
+      })
+      .attr('width', 10)
+      .attr('height', 10)
+      .attr('xlink:href', VEHICLE_ICON);
   }
   componentWillReceiveProps(newProps) {
-    if (newProps.map.getIn('geojson', 'type') && !newProps.map.get('locations').size) {
-      // subscribe only once to location updates after have received the geojson data
-      this.props.GetVehicleLocationsRequest();
+    let vehicleLocationsRetrieved = !!newProps.map.getIn('vehicleLocations', 'vehicle');
+    let geoJsonSize = newProps.map.get('geojson').size;
+    if (vehicleLocationsRetrieved && !geoJsonSize) {
+      // retrieve geojson
+      return this.props.GetGeoJsonRequest(MAP.geojsonURL);
     }
 
     // render the map only once! (deep reference comparison)
@@ -72,7 +84,9 @@ class Map extends Component {
       this.renderMap(this.projection, newProps.map.getIn(['geojson', 'features']));
     }
 
-    this.updateVehicles(this.projection, newProps.map.get('locationCoordinates').toJS());
+    if (vehicleLocationsRetrieved) {
+      this.updateVehicles(this.projection, newProps.map.get('locationCoordinates').toJS());
+    }
   }
 
 
