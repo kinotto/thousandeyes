@@ -41,7 +41,7 @@ export const getFilterState = createSelector(
       .map(location => location.routeTag);
 
     return filterState
-      // transform to a Set to filter duplicates
+      // transform to a Set to remove duplicates
       .set('routeTags', List(routeTags).toSet().toList());
   }
 );

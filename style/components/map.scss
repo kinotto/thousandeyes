@@ -11,4 +11,10 @@
         stroke-linejoin: round;
         stroke-linecap: round;
     }
+
+    &__updatingAlert{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }

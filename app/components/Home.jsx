@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Header from './Header';
 import Filter from './Filter';
-import Map from './Map';
+import D3Map from './D3Map';
 
 export default class Home extends Component {
   render() {
@@ -9,7 +9,7 @@ export default class Home extends Component {
       <div>
         <Header />
         <Filter />
-        <Map />
+        <D3Map />
       </div>
     );
   }

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-// import {Observable} from 'rxjs';
 import * as d3 from 'd3';
 import {
   MAP,
@@ -13,7 +12,7 @@ import {
   GetVehicleLocationsRequest
 } from '../actions';
 
-class Map extends Component {
+class D3Map extends Component {
   constructor() {
     super();
     this.projection = d3.geoMercator()
@@ -27,7 +26,6 @@ class Map extends Component {
       .projection(projection);
 
     d3.select('.map')
-      .html('')
       .append('svg')
       .attr('viewBox', '0 0 ' + MAP.width + ' ' + MAP.height)
       .attr('preserveAspectRatio', 'xMinYMin')
@@ -74,11 +72,19 @@ class Map extends Component {
 
     // render the map only once! (deep reference comparison)
     if (newProps.map.get('geojson') !== this.props.map.get('geojson')) {
+      // hide loader
+      d3.select('.map__updatingAlert').style('visibility', 'hidden');
       this.renderMap(this.projection, newProps.map.getIn(['geojson', 'features']));
     }
 
     if (vehicleLocationsRetrieved) {
-      this.updateVehicles(this.projection, newProps.map.get('locationCoordinates').toJS());
+      // show loader
+      d3.select('.map__updatingAlert').style('visibility', 'visible');
+      setTimeout(() => {
+        // hide loader
+        d3.select('.map__updatingAlert').style('visibility', 'hidden');
+        this.updateVehicles(this.projection, newProps.map.get('locationCoordinates').toJS());
+      }, 1000);
     }
   }
 
@@ -86,7 +92,9 @@ class Map extends Component {
   render() {
     return (
       <div className="map">
-        <div className="loader loader--center" />
+        <div className="map__updatingAlert">
+          Updating <span className="loader loader--small"/>
+        </div>
       </div>
     );
   }
@@ -98,7 +106,7 @@ const mapStateToProps = state => {
   };
 };
 
-Map.propTypes = {
+D3Map.propTypes = {
   'geojson': PropTypes.object,
   'GetGeoJsonRequest': PropTypes.func,
   'GetVehicleLocationsRequest': PropTypes.func,
@@ -108,4 +116,4 @@ Map.propTypes = {
 export default connect(mapStateToProps, {
   GetGeoJsonRequest,
   GetVehicleLocationsRequest
-})(Map);
+})(D3Map);
