@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {PropTypes} from 'prop-types';
 import {connect} from 'react-redux';
 import {getFilterState} from '../reducers/filter';
+import {FilterByRouteTag} from '../actions';
 
 class Filter extends Component {
   constructor() {
@@ -14,20 +15,19 @@ class Filter extends Component {
     return this.state.selected.find(sel => sel === routeTag);
   }
   addRemove(routeTag) {
+    let updateSelected;
     if (this.isSelected(routeTag)) {
       this.state.selected.splice(this.state.selected.indexOf(routeTag), 1);
-      this.setState({
-        'selected': this.state.selected
-      });
+      updateSelected = this.state.selected;
     } else {
-      this.setState({
-        'selected': [...this.state.selected, routeTag]
-      });
+      updateSelected = [...this.state.selected, routeTag];
     }
+    this.props.FilterByRouteTag(updateSelected);
+    this.setState({
+      'selected': updateSelected
+    });
   }
-  /* shouldComponentUpdate() {
-    return false;
-  }*/
+
   render() {
     return (
       <div className="filter">
@@ -51,11 +51,14 @@ class Filter extends Component {
 }
 
 Filter.propTypes = {
-  'filter': PropTypes.object
+  'filter': PropTypes.object,
+  'FilterByRouteTag': PropTypes.func
 };
 const mapStateToProps = state => {
   return {
     'filter': getFilterState(state)
   };
 };
-export default connect(mapStateToProps)(Filter);
+export default connect(mapStateToProps, {
+  FilterByRouteTag
+})(Filter);

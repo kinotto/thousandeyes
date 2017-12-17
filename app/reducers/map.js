@@ -2,14 +2,16 @@ import {Map, List} from 'immutable';
 import {createSelector} from 'reselect';
 import {
   GET_GEOJSON_RESPONSE,
-  GET_VEHICLES_LOCATIONS_RESPONSE
+  GET_VEHICLES_LOCATIONS_RESPONSE,
+  FILTER_BY_ROUTETAG
 } from '../actions';
 
 const initState = () => {
   return Map({
     'geojson': Map(),
     'vehicleLocations': Map(),
-    'locationCoordinates': List()
+    'locationCoordinates': List(),
+    'filters': List()
   });
 };
 
@@ -22,6 +24,10 @@ export const map = (state = initState(), action) => {
   case GET_VEHICLES_LOCATIONS_RESPONSE: {
     return state
       .set('vehicleLocations', Map(action.payload));
+  }
+  case FILTER_BY_ROUTETAG: {
+    return state
+      .set('filters', List(action.payload));
   }
   default:
     return state;
@@ -37,9 +43,15 @@ export const getMapState = createSelector(
   mapState => {
     let vehicles = mapState.getIn(['vehicleLocations', 'vehicle']);
     if (vehicles) {
-      mapState = mapState.set('locationCoordinates',
-        List(vehicles.map(location => [location.lon, location.lat]))
+      let filters = mapState.get('filters');
+      let locationCoordinates = List(vehicles
+        .filter(location => {
+          let flag = filters.some(filter => filter === location.routeTag);
+          return flag;
+        })
+        .map(location => [location.lon, location.lat])
       );
+      mapState = mapState.set('locationCoordinates', locationCoordinates);
     }
 
     return mapState;
