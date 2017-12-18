@@ -22,7 +22,7 @@ let handleReactiveLocation = locationJson => {
 };
 
 let vehicleAjax = () => {
-  return ajax({'url': API.LOCATIONS, 'crossDomain': true})
+  return ajax({'url': API.LOCATIONS})
     .map(({response}) => {
       return GetVehicleLocationsResponse(response);
     });

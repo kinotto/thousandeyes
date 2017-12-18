@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux-immutable';
-import {map} from './map';
+import {d3map} from './d3map';
 import {filter} from './filter';
 
 export const rootReducer = combineReducers({
-  map,
+  d3map,
   filter
 });

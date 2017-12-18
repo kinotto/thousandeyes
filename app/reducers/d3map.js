@@ -15,7 +15,7 @@ const initState = () => {
   });
 };
 
-export const map = (state = initState(), action) => {
+export const d3map = (state = initState(), action) => {
   switch (action.type) {
   case GET_GEOJSON_RESPONSE: {
     return state
@@ -35,7 +35,7 @@ export const map = (state = initState(), action) => {
 };
 
 
-const mapSelector = state => state.get('map');
+const mapSelector = state => state.get('d3map');
 
 // memoized selector
 export const getMapState = createSelector(

@@ -11,8 +11,10 @@ import {Map, List} from 'immutable';
 import {
   GET_GEOJSON_REQUEST,
   GET_VEHICLES_LOCATIONS_REQUEST,
+  FILTER_BY_ROUTETAG,
   GetGeoJsonRequest,
-  GetVehicleLocationsRequest
+  GetVehicleLocationsRequest,
+  FilterByRouteTag
 } from '../app/actions';
 
 describe('test main components', () => {
@@ -51,5 +53,12 @@ describe('test main components', () => {
       type: GET_VEHICLES_LOCATIONS_REQUEST
     }
     expect(GetVehicleLocationsRequest()).toEqual(action);
+  })
+
+  it('should dispatch an action to filter by routetag', () => {
+    let action = {
+      type: FILTER_BY_ROUTETAG
+    }
+    expect(FilterByRouteTag()).toEqual(action);
   })
 });

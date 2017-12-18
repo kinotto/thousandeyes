@@ -6,11 +6,12 @@ import {
   MAP,
   VEHICLE_ICON
 } from '../utilities/constants';
-import {getMapState} from '../reducers/map';
+import {getMapState} from '../reducers/d3map';
 import {
   GetGeoJsonRequest,
   GetVehicleLocationsRequest
 } from '../actions';
+
 
 class D3Map extends Component {
   constructor() {
@@ -63,27 +64,30 @@ class D3Map extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    let vehicleLocationsRetrieved = !!newProps.map.getIn('vehicleLocations', 'vehicle');
-    let geoJsonSize = newProps.map.get('geojson').size;
+    let vehicleLocationsRetrieved = !!newProps.d3map.getIn('vehicleLocations', 'vehicle');
+    let geoJsonSize = newProps.d3map.get('geojson').size;
+
     if (vehicleLocationsRetrieved && !geoJsonSize) {
       // retrieve geojson
       return this.props.GetGeoJsonRequest(MAP.geojsonURL);
     }
 
     // render the map only once! (deep reference comparison)
-    if (newProps.map.get('geojson') !== this.props.map.get('geojson')) {
+    if (newProps.d3map.get('geojson') !== this.props.d3map.get('geojson')) {
       // hide loader
       d3.select('.map__updatingAlert').style('visibility', 'hidden');
-      this.renderMap(this.projection, newProps.map.getIn(['geojson', 'features']));
+      this.renderMap(this.projection, newProps.d3map.getIn(['geojson', 'features']));
     }
 
     if (vehicleLocationsRetrieved) {
       // show loader
       d3.select('.map__updatingAlert').style('visibility', 'visible');
-      setTimeout(() => {
+      // remove any previous timeout
+      this.timeoutID && clearTimeout(this.timeoutID);
+      this.timeoutID = setTimeout(() => {
         // hide loader
         d3.select('.map__updatingAlert').style('visibility', 'hidden');
-        this.updateVehicles(this.projection, newProps.map.get('locationCoordinates').toJS());
+        this.updateVehicles(this.projection, newProps.d3map.get('locationCoordinates').toJS());
       }, 1000);
     }
   }
@@ -102,7 +106,7 @@ class D3Map extends Component {
 
 const mapStateToProps = state => {
   return {
-    'map': getMapState(state)
+    'd3map': getMapState(state)
   };
 };
 
@@ -110,7 +114,7 @@ D3Map.propTypes = {
   'geojson': PropTypes.object,
   'GetGeoJsonRequest': PropTypes.func,
   'GetVehicleLocationsRequest': PropTypes.func,
-  'map': PropTypes.object
+  'd3map': PropTypes.object
 };
 
 export default connect(mapStateToProps, {
