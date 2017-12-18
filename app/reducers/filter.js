@@ -17,16 +17,6 @@ export const filter = (state = initState(), action) => {
   default:
     return state;
   }
-  /* if (action.type === GET_VEHICLES_LOCATIONS_RESPONSE && !state.get('routeTags').size) {
-    let newState = state.set('vehicleLocations', Map(action.payload));
-    let routeTags = newState
-      .getIn(['vehicleLocations', 'vehicle'])
-      .map(location => location.routeTag);
-
-    return newState
-      .set('routeTags', List(routeTags).toSet().toList());
-  }
-  return state;*/
 };
 
 const filterSelector = state => state.get('filter');

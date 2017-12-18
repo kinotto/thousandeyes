@@ -1,9 +1,9 @@
 # thousandeyes
-San Francisco Vehicles Map
+San Francisco Vehicles Map show SF Muni vehicle locations updating realtime.
 
 polling to nextbus feed every 15s
 
-d3js used to display vehicles
+stack: react, redux, immutablejs, rxjs , d3js
 
 ## install
 
@@ -11,5 +11,8 @@ d3js used to display vehicles
 
 - yarn start
 
-## deployment - docker+heroku
+- yarn test (to run unit test)
+
+## deployment, docker+heroku
 - https://thousandeyes-karim.herokuapp.com/
+

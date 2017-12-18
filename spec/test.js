@@ -22,7 +22,7 @@ describe('test main components', () => {
 
   beforeEach(() => {
     store = Map({
-      map: Map(),
+      d3map: Map(),
       filter: Map({
         'vehicleLocations': Map({'vehicle': []}),
         'routeTags': List()
@@ -32,7 +32,7 @@ describe('test main components', () => {
     store = mockStore(store);
   })
 
-  it('should create a Map component', () => {
+  it('should create a D3Map component', () => {
     let d3map = shallow(<D3Map store={store} />);
     expect(d3map).toBeTruthy();
   })

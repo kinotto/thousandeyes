@@ -1,4 +1,4 @@
-//express server for prod environment
+//express server ONLY for prod environment
 const express = require('express');
 const fetch = require('node-fetch');
 const path = require('path');
@@ -13,6 +13,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/vehicles', (req, resp) => {
+  //expose a backend API to fetch vehicles since heroku run in https and nextbus API is in http.
+  //https://stackoverflow.com/questions/29112750/heroku-was-loaded-over-https-but-requested-an-insecure-xmlhttprequest-reques
   fetch(VEHICLES_API)
 	.then(res => res.json())
 	.then(body => resp.send(body));

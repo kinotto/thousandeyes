@@ -22,7 +22,7 @@ let handleReactiveLocation = locationJson => {
 };
 
 let vehicleAjax = () => {
-  return ajax({'url': API.LOCATIONS})
+  return ajax({'url': API.LOCATIONS, 'crossDomain': true})
     .map(({response}) => {
       return GetVehicleLocationsResponse(response);
     });
@@ -50,7 +50,7 @@ const pollingVehicleLocations = action$ => {
     .switchMap(pollingNextBus);
 };
 
-export const mapEpic = [
+export const d3mapEpic = [
   getGeoJson,
   pollingVehicleLocations
 ];

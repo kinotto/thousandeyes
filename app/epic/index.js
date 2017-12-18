@@ -1,5 +1,5 @@
 import {combineEpics} from 'redux-observable';
-import {mapEpic} from './mapEpic';
+import {d3mapEpic} from './d3mapEpic';
 
 
 /*
@@ -9,5 +9,5 @@ that redux can't handle by design
 https://redux-observable.js.org/docs/basics/Epics.html
 */
 export const rootEpic = combineEpics(
-  ...mapEpic,
+  ...d3mapEpic,
 );
