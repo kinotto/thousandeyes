@@ -11,4 +11,5 @@ d3js used to display vehicles
 
 - yarn start
 
-#deployment with docker
+## deployment - docker+heroku
+- https://thousandeyes-karim.herokuapp.com/
