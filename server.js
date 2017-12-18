@@ -1,4 +1,4 @@
-//express server ONLY for prod environment
+//EXPRESS SERVER ONLY FOR PRODUCTION ENVIRONMENT
 const express = require('express');
 const fetch = require('node-fetch');
 const path = require('path');

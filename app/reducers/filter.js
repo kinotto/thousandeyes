@@ -24,8 +24,6 @@ const filterSelector = state => state.get('filter');
 export const getFilterState = createSelector(
   [filterSelector],
   filterState => {
-    // return filterState;
-
     let routeTags = filterState
       .getIn(['vehicleLocations', 'vehicle'])
       .map(location => location.routeTag);

@@ -7,7 +7,6 @@ import {rootReducer} from './reducers';
 import {rootEpic} from './epic';
 import {createEpicMiddleware} from 'redux-observable';
 import '../style/main.scss';
-// http://webservices.nextbus.com/service/publicJSONFeed?command=vehicleLocations&a=sf-muni
 
 const epicMiddleware = createEpicMiddleware(rootEpic);
 
