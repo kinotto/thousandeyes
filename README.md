@@ -14,5 +14,5 @@ stack: react, redux, immutablejs, rxjs , d3js
 - yarn test (to run unit test)
 
 ## deployment, docker+heroku
-- https://thousandeyes-karim.herokuapp.com/
+- https://thousandeyes-karim.herokuapp.com/ (heroku could take up to 15-20s to responds)
 
